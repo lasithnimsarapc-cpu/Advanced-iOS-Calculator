@@ -33,12 +33,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Changed from height to min-height to prevent clipping on short screens */
     margin: 0;
-    /* Force the background color to use the active theme variable */
     background-color: var(--bg-global) !important; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     transition: background-color 0.3s ease;
+    overflow-x: hidden; /* Prevents any accidental side-scrolling on mobile devices */
 }
 
 /* App Wrapper mapping Desktop constraints vs Mobile UI rules */
@@ -108,7 +108,11 @@ body {
     font-size: 3.5rem;
     font-weight: 300;
     white-space: nowrap;
-    overflow-x: auto;
+    
+    /* Responsive Fixes: */
+    max-width: 100%;       /* Ensures the display element never stretches past the calculator block */
+    overflow-x: auto;      /* If a number is too long, it creates a clean, scrollable horizontal view inside the screen */
+    text-overflow: clip;   /* Clean clipping border for exceptionally long numeric results */
 }
 
 .display::-webkit-scrollbar { display: none; }
