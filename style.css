@@ -29,24 +29,32 @@ body.light-theme {
     --border-color: #c7c7cc;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Changed from height to min-height to prevent clipping on short screens */
+    min-height: 100vh; 
+    width: 100vw;
     margin: 0;
     background-color: var(--bg-global) !important; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     transition: background-color 0.3s ease;
-    overflow-x: hidden; /* Prevents any accidental side-scrolling on mobile devices */
+    overflow-x: hidden; 
 }
 
-/* App Wrapper mapping Desktop constraints vs Mobile UI rules */
+/* App Wrapper: Centers everything perfectly on all devices */
 .app-container {
     display: flex;
     gap: 20px;
-    align-items: stretch;
-    max-height: 90vh;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
 }
 
 .calculator {
@@ -54,6 +62,7 @@ body {
     border-radius: 35px;
     padding: 20px;
     width: 330px;
+    max-width: 100%;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -108,11 +117,9 @@ body {
     font-size: 3.5rem;
     font-weight: 300;
     white-space: nowrap;
-    
-    /* Responsive Fixes: */
-    max-width: 100%;       /* Ensures the display element never stretches past the calculator block */
-    overflow-x: auto;      /* If a number is too long, it creates a clean, scrollable horizontal view inside the screen */
-    text-overflow: clip;   /* Clean clipping border for exceptionally long numeric results */
+    max-width: 100%;       
+    overflow-x: auto;      
+    text-overflow: clip;   
 }
 
 .display::-webkit-scrollbar { display: none; }
@@ -127,12 +134,15 @@ body {
 
 .btn {
     border: none;
-    height: 70px;
-    width: 70px;
+    height: 68px;
+    width: 68px;
     border-radius: 50%;
     font-size: 1.7rem;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: filter 0.1s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -168,25 +178,36 @@ body {
 
 /* Mobile responsive rules hiding panel by default unless on Desktop */
 @media (max-width: 768px) {
-    .app-container { position: relative; }
+    .app-container { 
+        position: relative; 
+        justify-content: center;
+    }
     .history-panel {
         position: absolute;
-        left: 0;
+        left: 50%;
         top: 0;
         bottom: 0;
-        width: calc(100% - 40px);
+        width: 100%;
+        max-width: 330px;
         z-index: 10;
-        transform: translateX(110%);
+        transform: translate(-50%, 110%);
         opacity: 0;
         pointer-events: none;
     }
     .history-panel.open {
-        transform: translateX(0);
+        transform: translate(-50%, 0);
         opacity: 1;
         pointer-events: auto;
     }
     .close-panel-btn {
         display: block;
+    }
+    
+    /* Make buttons slightly responsive on very small mobile screens */
+    .btn {
+        height: 62px;
+        width: 62px;
+        font-size: 1.5rem;
     }
 }
 
